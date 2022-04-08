@@ -1,0 +1,43 @@
+@import 'variables';
+
+@function px($value) {
+  @return $value + 0px;
+}
+
+@function em($value) {
+  @return $value + 0em;
+}
+
+@function px2em($pixels, $context: $browserContext) {
+  @return #{$pixels/$context}em;
+}
+
+@function px2rem($size) {
+  @return #{$size / 16}rem;
+}
+
+@mixin breakpoint($class) {
+  @if $class == xs {
+    @media (max-width: px2em($bp_tablet - 1)) {
+      @content;
+    }
+  } @else if $class == sm {
+    @media (min-width: px2em($bp_tablet)) {
+      @content;
+    }
+  } @else if $class == md {
+    @media (min-width: px2em($bp_sm_desktop)) {
+      @content;
+    }
+  } @else if $class == lg {
+    @media (min-width: px2em($bp_desktop)) {
+      @content;
+    }
+  } @else if $class == xl {
+    @media (min-width: px2em($bp_xl_desktop)) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint mixin supports: xs, sm, md, lg, xl";
+  }
+}
