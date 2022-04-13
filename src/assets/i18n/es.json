@@ -1,0 +1,11 @@
+{
+  "films": {
+    "title": "Peliculas"
+  },
+  "actors": {
+    "title": "Actores"
+  },
+  "companies": {
+    "title": "Estudios"
+  }
+}

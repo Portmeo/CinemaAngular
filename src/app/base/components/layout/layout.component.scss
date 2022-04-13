@@ -1,0 +1,36 @@
+@import '../../../../styles/main';
+
+mat-sidenav-container {
+  height: 93vh;
+
+  mat-sidenav {
+    mat-nav-list {
+      padding: px2rem(5) px2rem(15);
+
+      mat-list-item {
+        border-bottom: px2rem(1) solid $black;
+
+        mat-icon {
+          margin-left: px2rem(15);
+        }
+      }
+    }
+  }
+
+  mat-sidenav-content {
+    padding: px2rem(15);
+  }
+}
+
+.loading-data {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
