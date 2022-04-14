@@ -1,5 +1,5 @@
-import { createReducer } from "@ngrx/store";
-import { MainState } from "@state/models/main-state";
+import { createReducer } from '@ngrx/store';
+import { MainState } from '@state/models/main-state.model';
 
 export const initialState: MainState = {
   errors: null

@@ -1,5 +1,9 @@
 @import '../../../../styles/main';
 
+.title {
+  margin-left: px2rem(25);
+}
+
 mat-sidenav-container {
   height: 93vh;
 
