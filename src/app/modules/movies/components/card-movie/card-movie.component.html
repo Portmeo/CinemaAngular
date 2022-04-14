@@ -1,1 +1,7 @@
-<p>card-movie works!</p>
+<div class="movie" *ngIf="movie">
+  <h2 class="movie__title">{{movie.title}}</h2>
+  <img class="movie__img" [src]="movie.poster ? movie.poster : 'assets/images/not-found-image.jpg'" alt="{{movie.title}}">
+  <div class="movie__genre">
+    <span *ngFor="let genre of movie.genre">#{{genre}}</span>
+  </div>
+</div>

@@ -1,1 +1,7 @@
-<p>movies works!</p>
+<div class="list-movies">
+  <app-card-movie *ngFor="let movie of movies$ | async"
+  class="list-movies__card"
+  [movie]="movie">
+  </app-card-movie>
+</div>
+

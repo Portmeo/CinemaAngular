@@ -16,6 +16,16 @@ const routes: Routes = [
         path: 'movies',
         component: LayoutComponent,
         loadChildren: () => import('../modules/movies/movies.module').then(m => m.MoviesModule)
+      },
+      {
+        path: 'actors',
+        component: LayoutComponent,
+        loadChildren: () => import('../modules/actors/actors.module').then(m => m.ActorsModule)
+      },
+      {
+        path: 'companies',
+        component: LayoutComponent,
+        loadChildren: () => import('../modules/companies/companies.module').then(m => m.CompaniesModule)
       }
     ]
   },

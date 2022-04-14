@@ -7,18 +7,29 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" #menu>
     <mat-nav-list>
-      <mat-list-item class="sidenav-item" (click)="menu.toggle()">
-        <span>{{ 'films.title' | translate }}</span>
-        <mat-icon>east</mat-icon>
-      </mat-list-item>
-      <mat-list-item class="sidenav-item" (click)="menu.toggle()">
-        <span>{{ 'actors.title' | translate }}</span>
-        <mat-icon>east</mat-icon>
-      </mat-list-item>
-      <mat-list-item class="sidenav-item" (click)="menu.toggle()">
-        <span>{{ 'companies.title' | translate }}</span>
-        <mat-icon>east</mat-icon>
-      </mat-list-item>
+
+      <a routerLink="/movies">
+        <mat-list-item class="sidenav-item" routerLinkActive="active-link" (click)="menu.toggle()">
+          <span>{{ 'films.title' | translate }}</span>
+          <mat-icon>east</mat-icon>
+        </mat-list-item>
+      </a>
+
+      <a routerLink="/actors">
+        <mat-list-item class="sidenav-item" routerLinkActive="active-link" (click)="menu.toggle()">
+          <span>{{ 'actors.title' | translate }}</span>
+          <mat-icon>east</mat-icon>
+        </mat-list-item>
+      </a>
+
+      <a routerLink="/companies">
+        <mat-list-item class="sidenav-item" routerLink="/companies" routerLinkActive="active-link"
+          (click)="menu.toggle()">
+          <span>{{ 'companies.title' | translate }}</span>
+          <mat-icon>east</mat-icon>
+        </mat-list-item>
+      </a>
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -28,4 +39,3 @@
 <div class="loading-data" *ngIf="(spinnerService.loaderSpinner$ | async)">
   <mat-spinner></mat-spinner>
 </div>
-

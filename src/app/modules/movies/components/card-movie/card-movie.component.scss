@@ -1,0 +1,19 @@
+@import '../../../../../styles/main';
+
+.movie {
+  display: flex;
+  flex-direction: column;
+  border: px2rem(2) solid $black;
+  border-radius: px2rem(15);
+  padding: px2rem(10) px2rem(25);
+
+  &__img {
+    margin: px2rem(15) 0;
+  }
+
+  &__genre {
+    span {
+      margin-right: px2rem(15);
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import '../../../styles/main';
+
+.list-movies {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: px2rem(25);
+  justify-content: space-around;
+
+  &__card {
+    margin: px2rem(10);
+    width: px2rem(350);
+  }
+}
