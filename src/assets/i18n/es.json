@@ -1,6 +1,11 @@
 {
+  "layout": {
+    "pageNotFound": "Pagina no disponible!",
+    "pageNotFound_text": "Lo sentimos la pagina no se encuentra disponible"
+  },
   "films": {
-    "title": "Peliculas"
+    "title": "Peliculas",
+    "new": "Nueva película"
   },
   "actors": {
     "title": "Actores"

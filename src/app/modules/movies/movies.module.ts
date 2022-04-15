@@ -12,6 +12,9 @@ import { MoviesEffects } from './store/effects/movies.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { MoviesService } from './services/movies.service';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [
     MoviesComponent,
@@ -25,6 +28,8 @@ import { MoviesService } from './services/movies.service';
     TranslateModule.forChild(),
     StoreModule.forFeature('movies', moviesReducer),
     EffectsModule.forFeature([MoviesEffects]),
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     MoviesService

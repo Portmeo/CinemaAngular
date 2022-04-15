@@ -10,4 +10,10 @@
     margin: px2rem(10);
     width: px2rem(350);
   }
+
+  &__create-movie{
+    position: fixed;
+    bottom: px2rem(10);
+    right: px2rem(20);
+  }
 }
