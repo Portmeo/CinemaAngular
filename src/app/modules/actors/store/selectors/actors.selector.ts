@@ -7,7 +7,7 @@ export const getActorsList = createSelector(getActorsData, (state: ActorsState) 
   return state.list;
 });
 
-export const getNameActorByid = (id: number) => createSelector(getActorsData, (state: ActorsState) =>{
+export const getNameActorById = (id: number) => createSelector(getActorsData, (state: ActorsState) =>{
   const actor = state.list.find(actor => actor.id === id);
   return actor ? `${actor.first_name} ${actor.last_name}` : '';
 });

@@ -1,1 +1,77 @@
-<p>edit-movie works!</p>
+<div class="edit-movie">
+  <div class="edit-movie__poster">
+    <img src="{{formMovie.get('poster')?.value}}">
+  </div>
+  <form class="edit-movie__form" [formGroup]="formMovie">
+    <mat-form-field class="edit-movie__form__score" appearance="fill">
+      <mat-label>{{ 'movies.form.score' | translate }}</mat-label>
+      <input matInput type="number" formControlName="imdbRating">
+    </mat-form-field>
+    <mat-form-field class="edit-movie__form__duration" appearance="fill">
+      <mat-label>{{ 'movies.form.duration' | translate }}</mat-label>
+      <input matInput type="number" formControlName="duration">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'movies.form.title' | translate }}</mat-label>
+      <input matInput type="text" formControlName="title">
+    </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="isEnableUpdate">
+      <mat-label>{{ 'movies.form.poster' | translate }}</mat-label>
+      <input matInput type="text" formControlName="poster">
+      <mat-error *ngIf="formMovie.get('poster')?.hasError('pattern')">{{'movies.form.poster-error' |translate}}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="isEnableUpdate">
+      <mat-label>{{ 'movies.form.genre' | translate }}</mat-label>
+      <input matInput #inputGenren type="text">
+      <button type="button" matSuffix [disabled]="!inputGenren.value" mat-icon-button
+        (click)="addGenre(inputGenren.value)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+    <div class="edit-movie__form__genre">
+      <h3 *ngIf="!isEnableUpdate">{{ 'movies.form.genre' | translate }}</h3>
+      <div formArrayName="genre">
+        <div [ngClass]="isEnableUpdate ?  'edit-movie__form__chip-values' : 'edit-movie__form__chip-values--disabled'" [formGroupName]="i"
+          *ngFor="let genre of genreValues.controls; let i = index">
+          <span class="icon" (click)="removeGenre(i)" *ngIf="isEnableUpdate">&#45;</span>
+          <span>#{{genre.value}}</span>
+        </div>
+      </div>
+    </div>
+    <mat-form-field appearance="fill" floatLabel="always" *ngIf="isEnableUpdate">
+      <mat-label>{{ 'actors.title' | translate }}</mat-label>
+      <mat-select #selectActor [placeholder]="'movies.form.select_actor' | translate"
+        (selectionChange)="addActor($event.value)">
+        <mat-option *ngFor="let actor of actors$ | async" [disabled]="isSelectedActor(actor.id)" [value]="actor.id">
+          {{actor.first_name}} {{actor.last_name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="edit-movie__form__actors">
+      <h3 *ngIf="!isEnableUpdate">{{ 'actors.title' | translate }}</h3>
+      <div formArrayName="actors">
+        <div [ngClass]="isEnableUpdate ?  'edit-movie__form__chip-values' : 'edit-movie__form__chip-values--disabled'" [formGroupName]="i"
+          *ngFor="let actor of actorsValues.controls; let i = index">
+          <span class="icon" (click)="removeActor(i)" *ngIf="isEnableUpdate">&#45;</span>
+          <span>{{(getNameActor(actor.value) | async)}}</span>
+        </div>
+      </div>
+    </div>
+    <mat-form-field appearance="fill" floatLabel="always" *ngIf="isEnableUpdate">
+      <mat-label>{{ 'companies.title' | translate }}</mat-label>
+      <mat-select formControlName="company" [placeholder]="'movies.form.select_company' | translate">
+        <mat-option *ngFor="let companie of companies$ | async" [value]="companie.id">{{companie.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'movies.form.year' | translate }}</mat-label>
+      <input matInput type="number" formControlName="year">
+    </mat-form-field>
+  </form>
+  <button mat-fab class="edit-movie__update" type="button" color="primary" (click)="isEnableUpdate ? updateMovie() : enableMovie()">
+    <mat-icon>{{ isEnableUpdate ? 'save' : 'edit'}}</mat-icon>
+  </button>
+  <button mat-fab class="edit-movie__delete" type="button" color="warn" (click)="removeMovie()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

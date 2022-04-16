@@ -1,6 +1,6 @@
 <div class="create-movie">
   <form class="create-movie__form" [formGroup]="formMovie">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" >
       <mat-label>{{ 'movies.form.title' | translate }}</mat-label>
       <input matInput type="text" formControlName="title">
     </mat-form-field>
@@ -10,7 +10,7 @@
       <mat-error *ngIf="formMovie.get('poster')?.hasError('pattern')">{{'movies.form.poster-error' |translate}}
       </mat-error>
     </mat-form-field>
-    <mat-form-field class="create-movie__form__genre" appearance="fill">
+    <mat-form-field appearance="fill">
       <mat-label>{{ 'movies.form.genre' | translate }}</mat-label>
       <input matInput #inputGenren type="text">
       <button type="button" matSuffix [disabled]="!inputGenren.value" mat-icon-button

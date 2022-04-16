@@ -4,7 +4,7 @@ import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { setTitleLayout } from '@base/store/actions/layout.action';
 import { Actor } from '@modules/actors/store/models/actors.model';
-import { getActorsList, getNameActorByid } from '@modules/actors/store/selectors/actors.selector';
+import { getActorsList, getNameActorById } from '@modules/actors/store/selectors/actors.selector';
 import { Company } from '@modules/companies/store/models/company.model';
 import { getCompaniesList } from '@modules/companies/store/selectors/companies.selectors';
 import { Store } from '@ngrx/store';
@@ -88,7 +88,7 @@ export class CreateMovieComponent {
   }
 
   getNameActor(id: number): Observable<string | undefined> {
-    return this.store.select(getNameActorByid(id));
+    return this.store.select(getNameActorById(id));
   }
 
 }

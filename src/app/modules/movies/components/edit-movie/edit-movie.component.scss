@@ -1,0 +1,91 @@
+@import '../../../../../styles/main';
+
+mat-form-field {
+  width: 100%;
+  margin: px2rem(5);
+}
+
+.edit-movie {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  @include breakpoint(md) {
+    margin: px2rem(10);
+    flex-direction: row;
+  }
+
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+
+    @include breakpoint(md) {
+      width: 50%;
+      margin-left: px2rem(20);
+    }
+
+    &__duration,
+    &__score {
+      width: 45%;
+    }
+
+    &__genre, &__actors {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      h3 {
+        border-bottom: px2rem(1) solid $black;
+        margin: px2rem(10);
+      }
+      div {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+
+    &__chip-values {
+      position: relative;
+      display: flex;
+      border: px2rem(1) solid $black;
+      border-radius: px2rem(10);
+      padding: px2rem(5);
+      margin-left: px2rem(10);
+
+      .icon {
+        cursor: pointer;
+        position: absolute;
+        top: px2rem(-8);
+        right: px2rem(-8);
+        background: $white;
+        border: px2rem(1) solid $black;
+        border-radius: 50%;
+        font-size: px2rem(16);
+        padding: px2rem(5);
+        line-height: px2rem(5);
+      }
+    }
+
+    &__chip-values--disabled {
+      position: relative;
+      display: flex;
+      padding: px2rem(5);
+      margin-left: px2rem(10);
+    }
+  }
+
+  &__update {
+    position: fixed;
+    bottom: px2rem(10);
+    right: px2rem(80);
+  }
+
+  &__delete {
+    position: fixed;
+    bottom: px2rem(10);
+    right: px2rem(20);
+  }
+
+}

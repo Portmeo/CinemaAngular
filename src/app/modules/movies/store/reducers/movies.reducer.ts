@@ -15,6 +15,10 @@ export const moviesReducer = createReducer(
   on(MovieActions.createMovie, (state, { movie }) => ({
     ...state,
     list: [...state.list, movie]
+  })),
+  on(MovieActions.removeMovie, (state, { id }) => ({
+    ...state,
+    list: state.list.filter(movie => movie.id !== id)
   }))
 )
 

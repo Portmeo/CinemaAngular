@@ -22,12 +22,6 @@ mat-form-field {
       width: 50%;
     }
 
-    &__genre {
-      mat-hint {
-        color: $red;
-      }
-    }
-
     &__chip-values {
       position: relative;
       display: flex;

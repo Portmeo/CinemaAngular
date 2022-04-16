@@ -1,7 +1,8 @@
 <div class="list-movies">
   <app-card-movie *ngFor="let movie of movies$ | async"
-  class="list-movies__card"
-  [movie]="movie">
+    [routerLink]="['edit', movie.id]"
+    class="list-movies__card"
+    [movie]="movie">
   </app-card-movie>
   <button routerLink="create" class="list-movies__create-movie" mat-fab color="primary">
     <mat-icon>add</mat-icon>
