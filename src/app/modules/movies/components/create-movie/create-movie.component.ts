@@ -3,8 +3,11 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { setTitleLayout } from '@base/store/actions/layout.action';
+import { Actor } from '@modules/actors/store/models/actors.model';
+import { getActorsList, getNameActorByid } from '@modules/actors/store/selectors/actors.selector';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 import * as MovieActions from "../../store/actions/movies.actions";
 
 @Component({
@@ -18,8 +21,7 @@ export class CreateMovieComponent implements OnInit {
   public URL_REGEXP = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
   public companies: any = [{ id: 1, name: 'company1' }, { id: 2, name: 'company2' }, { id: 3, name: 'company3' }];
-  public actors: any = [{ id: 1, name: 'actor1' }, { id: 2, name: 'actor2' }, { id: 3, name: 'actor3' }];
-
+  public actors$: Observable<Actor[]> = this.store.select(getActorsList);
 
   @ViewChild('inputGenren', { read: MatInput }) inputGenren!: MatInput;
   @ViewChild('selectActor', { read: MatSelect }) selectActor!: MatSelect;
@@ -86,8 +88,8 @@ export class CreateMovieComponent implements OnInit {
     return this.actorsValues.value.includes(id);
   }
 
-  getNameActor(id: number): void {
-    return this.actors.find((actor: any) => actor.id === id).name
+  getNameActor(id: number): Observable<string | undefined> {
+    return this.store.select(getNameActorByid(id));
   }
 
 }

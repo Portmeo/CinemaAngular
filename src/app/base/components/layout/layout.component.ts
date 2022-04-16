@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { getActors } from '@modules/actors/store/actions/actors.actions';
 import { getMovies } from '@modules/movies/store/actions/movies.actions';
 import { Store } from '@ngrx/store';
 import { SpinnerService } from '@shared/services/spinner.service';
@@ -26,6 +27,7 @@ export class LayoutComponent implements OnInit {
       }
     });
     this.store.dispatch(getMovies());
+    this.store.dispatch(getActors());
   }
 
   ngOnInit(): void { }

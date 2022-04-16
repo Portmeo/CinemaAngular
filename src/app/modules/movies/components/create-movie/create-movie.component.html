@@ -29,15 +29,15 @@
       <mat-label>{{ 'actors.title' | translate }}</mat-label>
       <mat-select #selectActor [placeholder]="'movies.form.select_actor' | translate"
         (selectionChange)="addActor($event.value)">
-        <mat-option *ngFor="let actor of actors" [disabled]="isSelectedActor(actor.id)" [value]="actor.id">
-          {{actor.name}}</mat-option>
+        <mat-option *ngFor="let actor of actors$ | async" [disabled]="isSelectedActor(actor.id)" [value]="actor.id">
+          {{actor.first_name}} {{actor.last_name}}</mat-option>
       </mat-select>
     </mat-form-field>
     <ng-container formArrayName="actors">
       <div class="create-movie__form__chip-values" [formGroupName]="i"
         *ngFor="let actor of actorsValues.controls; let i = index">
         <span class="icon" (click)="removeActor(i)">&#45;</span>
-        <span>{{getNameActor(actor.value)}}</span>
+        <span>{{(getNameActor(actor.value) | async)}}</span>
       </div>
     </ng-container>
     <mat-form-field appearance="fill" floatLabel="always">

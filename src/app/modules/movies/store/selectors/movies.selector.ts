@@ -5,4 +5,4 @@ export const getMoviesData = createFeatureSelector<MoviesState>('movies');
 
 export const getMoviesList = createSelector(getMoviesData, (state: MoviesState) =>{
   return state.list;
-})
+});
