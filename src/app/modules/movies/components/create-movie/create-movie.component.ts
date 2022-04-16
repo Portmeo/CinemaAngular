@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { setTitleLayout } from '@base/store/actions/layout.action';
 import { Actor } from '@modules/actors/store/models/actors.model';
 import { getActorsList, getNameActorByid } from '@modules/actors/store/selectors/actors.selector';
+import { Company } from '@modules/companies/store/models/company.model';
+import { getCompaniesList } from '@modules/companies/store/selectors/companies.selectors';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -15,12 +17,12 @@ import * as MovieActions from "../../store/actions/movies.actions";
   templateUrl: './create-movie.component.html',
   styleUrls: ['./create-movie.component.scss']
 })
-export class CreateMovieComponent implements OnInit {
+export class CreateMovieComponent {
 
   public formMovie!: FormGroup;
   public URL_REGEXP = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
-  public companies: any = [{ id: 1, name: 'company1' }, { id: 2, name: 'company2' }, { id: 3, name: 'company3' }];
+  public companies$: Observable<Company[]> = this.store.select(getCompaniesList);
   public actors$: Observable<Actor[]> = this.store.select(getActorsList);
 
   @ViewChild('inputGenren', { read: MatInput }) inputGenren!: MatInput;
@@ -32,9 +34,6 @@ export class CreateMovieComponent implements OnInit {
   ) {
     this.store.dispatch(setTitleLayout({ title: this.translate.instant('movies.new') }));
     this.buildForm();
-  }
-
-  ngOnInit(): void {
   }
 
   buildForm() {
