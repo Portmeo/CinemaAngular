@@ -11,6 +11,10 @@ export const moviesReducer = createReducer(
   on(MovieActions.setMovies, (state, { list }) => ({
     ...state,
     list
+  })),
+  on(MovieActions.createMovie, (state, { movie }) => ({
+    ...state,
+    list: [...state.list, movie]
   }))
 )
 

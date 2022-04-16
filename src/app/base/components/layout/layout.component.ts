@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { getMovies } from '@modules/movies/store/actions/movies.actions';
 import { Store } from '@ngrx/store';
 import { SpinnerService } from '@shared/services/spinner.service';
 import { getTitleLayout } from '../../store/selectors/layout.selector';
@@ -24,6 +25,7 @@ export class LayoutComponent implements OnInit {
         this.isShowMenuButton = routeEvent.url.split('/').length < 3;
       }
     });
+    this.store.dispatch(getMovies());
   }
 
   ngOnInit(): void { }

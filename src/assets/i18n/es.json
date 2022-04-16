@@ -3,9 +3,21 @@
     "pageNotFound": "Pagina no disponible!",
     "pageNotFound_text": "Lo sentimos la pagina no se encuentra disponible"
   },
-  "films": {
+  "movies": {
     "title": "Peliculas",
-    "new": "Nueva película"
+    "new": "Nueva película",
+    "form": {
+      "title": "Título",
+      "poster": "Póster (url)",
+      "genre": "Géneros",
+      "company": "Estudio",
+      "year": "Año",
+      "duration": "Duración",
+      "score": "Puntuación",
+      "select_actor": "Seleccione un actor",
+      "select_company": "Seleccione un estudio",
+      "poster-error": "Texto introducido no es una url"
+    }
   },
   "actors": {
     "title": "Actores"

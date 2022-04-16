@@ -1,12 +1,15 @@
 // ------ Color ------------
 $black: #000000;
 $blue: blue;
+$white: white;
+$red: red;
 
 
 // ------ Flexboxgrid ------
 $breakpoints: sm 48rem 46rem, md 62rem 61rem, lg 79rem 71rem, xl 108rem 105rem !default;
 
 // ------ Measures ------
+$browserContext: 16;  // px
 $bp_tablet: 768; // px
 $bp_sm_desktop: 1050; // px
 $bp_desktop: 1250; // px

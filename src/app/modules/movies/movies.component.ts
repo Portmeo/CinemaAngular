@@ -20,8 +20,7 @@ export class MoviesComponent implements OnInit {
     private store: Store,
     private translate: TranslateService,
   ) {
-    this.store.dispatch(setTitleLayout({title: this.translate.instant('films.title')}));
-    this.store.dispatch(getMovies());
+    this.store.dispatch(setTitleLayout({title: this.translate.instant('movies.title')}));
   }
 
   ngOnInit(): void {
