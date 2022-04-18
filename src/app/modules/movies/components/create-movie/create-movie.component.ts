@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { setTitleLayout } from '@base/store/actions/layout.action';
+import { setActorsByMovie } from '@modules/actors/store/actions/actors.actions';
 import { Actor } from '@modules/actors/store/models/actors.model';
 import { getActorsList } from '@modules/actors/store/selectors/actors.selector';
+import { setCompaniesByMovie } from '@modules/companies/store/actions/companies.actions';
 import { Company } from '@modules/companies/store/models/company.model';
 import { getCompaniesList } from '@modules/companies/store/selectors/companies.selectors';
 import { Store } from '@ngrx/store';
@@ -48,6 +50,8 @@ export class CreateMovieComponent {
   saveMovie(): void {
     const {company, ...movie } = this.formMovie.value;
     this.store.dispatch(MovieActions.createMovie({ movie: movie }));
+    this.store.dispatch(setActorsByMovie({idMovie: movie.id, newActors: movie.actors}));
+    this.store.dispatch(setCompaniesByMovie({idMovie: movie.id, newCompany: company}));
     this.buildForm();
   }
 

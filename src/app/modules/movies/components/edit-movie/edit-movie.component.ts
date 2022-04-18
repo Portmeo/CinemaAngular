@@ -2,16 +2,18 @@ import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { setTitleLayout } from '@base/store/actions/layout.action';
+import { setActorsByMovie } from '@modules/actors/store/actions/actors.actions';
 import { Actor } from '@modules/actors/store/models/actors.model';
 import { getActorsList, getNameActorById } from '@modules/actors/store/selectors/actors.selector';
+import { setCompaniesByMovie } from '@modules/companies/store/actions/companies.actions';
 import { Company } from '@modules/companies/store/models/company.model';
-import { getCompaniesList, getNameCompanyByIdMovie } from '@modules/companies/store/selectors/companies.selectors';
+import { getCompaniesList, getCompanyByIdMovie } from '@modules/companies/store/selectors/companies.selectors';
 import * as MoviesActions from '@modules/movies/store/actions/movies.actions';
 import { Movie } from '@modules/movies/store/models/movie.model';
 import { getMovieById } from '@modules/movies/store/selectors/movies.selector';
 import { Store } from '@ngrx/store';
 import { UnsubscribeOnDestroy } from '@shared/class/unsubscribeOnDestroy';
-import { Observable, takeUntil } from 'rxjs';
+import { firstValueFrom, Observable, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-edit-movie',
@@ -26,6 +28,8 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
   public companies$: Observable<Company[]> = this.store.select(getCompaniesList);
   public actors$: Observable<Actor[]> = this.store.select(getActorsList);
   public isEnableUpdate = false;
+  public movie!: Movie;
+  public company!: Company | null;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -37,10 +41,12 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
       this.store.select(getMovieById(+this.actRoute.snapshot.params['id']))
         .pipe(
           takeUntil(this.destroyed$)
-        ).subscribe(movie => {
+        ).subscribe(async movie => {
           if (movie) {
             this.store.dispatch(setTitleLayout({ title: movie.title }));
             this.isEnableUpdate = false;
+            this.movie = movie;
+            this.company = await firstValueFrom(this.getCompany(movie.id));
             this.buildForm(movie);
           } else {
             this.router.navigate(['/movies']);
@@ -56,7 +62,7 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
       poster: new FormControl(movie.poster, [Validators.required, Validators.pattern(this.URL_REGEXP)]),
       genre: new FormArray([], Validators.required),
       actors: new FormArray([], Validators.required),
-      company: new FormControl('', Validators.required),
+      company: new FormControl(this.company?.id, Validators.required),
       year: new FormControl(movie.year, Validators.required),
       duration: new FormControl(movie.duration, Validators.required),
       imdbRating: new FormControl(movie.imdbRating, Validators.required)
@@ -87,6 +93,8 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
 
   updateMovie() {
     const {company, ...movie } = this.formMovie.value;
+    this.store.dispatch(setActorsByMovie({idMovie: movie.id, oldActors: this.movie.actors, newActors: movie.actors}));
+    this.store.dispatch(setCompaniesByMovie({idMovie: movie.id, oldCompany: this.company!.id, newCompany: company}));
     this.store.dispatch(MoviesActions.updateMovie({ movieUpdate: movie }));
   }
 
@@ -98,7 +106,7 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
     return this.store.select(getNameActorById(id));
   }
 
-  getNameCompany(id: number): Observable<string | undefined> {
-    return this.store.select(getNameCompanyByIdMovie(id));
+  getCompany(id: number): Observable<Company | null> {
+    return this.store.select(getCompanyByIdMovie(id));
   }
 }

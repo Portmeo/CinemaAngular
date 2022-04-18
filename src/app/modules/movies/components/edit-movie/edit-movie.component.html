@@ -1,31 +1,31 @@
 <div class="edit-movie">
   <div class="edit-movie__poster">
-    <img [src]="formMovie.get('poster')?.value ? formMovie.get('poster')?.value : 'assets/images/not-found-image.jpg'" alt="{{formMovie.get('title')?.value}}">
+    <img [src]="movie.poster ? movie.poster : 'assets/images/not-found-image.jpg'" alt="{{formMovie.get('title')?.value}}">
   </div>
   <div class="edit-movie__data" *ngIf="!isEnableUpdate else TempleteFormMovie">
     <div class="edit-movie__data__score">
       <div class="edit-movie__data__score__box">
         <h2>{{ 'movies.form.score' | translate }}</h2>
-        <span>{{formMovie.get('imdbRating')?.value}}</span>
+        <span>{{movie.imdbRating}}</span>
       </div>
       <div class="edit-movie__data__score__box--duration">
         <h2>{{ 'movies.form.duration' | translate }}</h2>
-        <span>{{formMovie.get('duration')?.value | timeMovie}}</span>
+        <span>{{movie.duration | timeMovie}}</span>
       </div>
     </div>
     <div>
       <h2>{{ 'actors.title' | translate }}</h2>
-      <p *ngFor="let actor of actorsValues.controls">
-        {{(getNameActor(actor.value) | async)}}
+      <p *ngFor="let actor of movie.actors">
+        {{(getNameActor(actor) | async)}}
       </p>
     </div>
     <div>
       <h2>{{ 'companies.title' | translate }}</h2>
-      <p>{{getNameCompany(formMovie.get('id')?.value) | async}}</p>
+      <p>{{(getCompany(movie.id) | async)?.name}}</p>
     </div>
     <div class="edit-movie__data__genre">
       <h2>{{ 'movies.form.genre' | translate }}</h2>
-      <span *ngFor="let genre of genreValues.controls">#{{genre.value}}</span>
+      <span *ngFor="let genre of movie.genre">#{{genre}}</span>
     </div>
   </div>
   <ng-template #TempleteFormMovie>
