@@ -1,7 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { setTitleLayout } from '@base/store/actions/layout.action';
 import { Actor } from '@modules/actors/store/models/actors.model';
