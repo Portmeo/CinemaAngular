@@ -1,10 +1,5 @@
 @import '../../../../../styles/main';
 
-mat-form-field {
-  width: 100%;
-  margin: px2rem(10);
-}
-
 .create-movie {
   display: flex;
   justify-content: center;
@@ -14,34 +9,9 @@ mat-form-field {
   }
 
   &__form {
-    display: flex;
-    flex-wrap: wrap;
     width: 100%;
-
     @include breakpoint(md) {
       width: 50%;
-    }
-
-    &__chip-values {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      border: px2rem(1) solid $black;
-      border-radius: px2rem(10);
-      padding: px2rem(5);
-      margin-left: px2rem(10);
-      .icon {
-        cursor: pointer;
-        position: absolute;
-        top: px2rem(-8);
-        right: px2rem(-8);
-        background: $white;
-        border: px2rem(1) solid $black;
-        border-radius: 50%;
-        font-size: px2rem(16);
-        padding: px2rem(5);
-        line-height: px2rem(5);
-      }
     }
   }
 

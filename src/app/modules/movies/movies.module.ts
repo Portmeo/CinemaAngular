@@ -19,13 +19,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { FormMovieComponent } from './components/form-movie/form-movie.component';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
     MoviesComponent,
     CardMovieComponent,
     EditMovieComponent,
-    CreateMovieComponent
+    CreateMovieComponent,
+    FormMovieComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +40,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [
     MoviesService

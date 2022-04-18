@@ -1,78 +1,82 @@
 @import '../../../../../styles/main';
 
-mat-form-field {
-  width: 100%;
-  margin: px2rem(5);
-}
-
 .edit-movie {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  justify-content: center;
+  padding: px2rem(15);
 
   @include breakpoint(md) {
     margin: px2rem(10);
     flex-direction: row;
+    align-items: flex-start;
   }
 
   &__form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     width: 100%;
 
     @include breakpoint(md) {
       width: 50%;
-      margin-left: px2rem(20);
+    }
+  }
+
+  &__poster {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    @include breakpoint(md) {
+      width: 50%;
+    }
+    img {
+      width: 80vw;
+      max-width: px2rem(400);
+
+      @include breakpoint(md) {
+        width: 100vw;
+      }
+    }
+  }
+
+  &__data {
+    width: 100%;
+
+    @include breakpoint(md) {
+      margin-left: px2rem(10);
+      width: 50%;
     }
 
-    &__duration,
+    h2 {
+      border-bottom: px2rem(1) solid $black;
+      margin-top: px2rem(10);
+      margin-bottom: px2rem(10);
+    }
+
     &__score {
-      width: 45%;
-    }
-
-    &__genre, &__actors {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       width: 100%;
-      h3 {
-        border-bottom: px2rem(1) solid $black;
-        margin: px2rem(10);
-      }
-      div {
-        display: flex;
-        flex-direction: row;
-      }
-    }
 
-    &__chip-values {
-      position: relative;
-      display: flex;
-      border: px2rem(1) solid $black;
-      border-radius: px2rem(10);
-      padding: px2rem(5);
-      margin-left: px2rem(10);
+      &__box {
+        width: 50%;
 
-      .icon {
-        cursor: pointer;
-        position: absolute;
-        top: px2rem(-8);
-        right: px2rem(-8);
-        background: $white;
-        border: px2rem(1) solid $black;
-        border-radius: 50%;
-        font-size: px2rem(16);
-        padding: px2rem(5);
-        line-height: px2rem(5);
+        h2 {
+          border-bottom: 0;
+        }
+
+        &--duration {
+          text-align: right;
+
+          h2 {
+            border-bottom: 0;
+          }
+        }
       }
     }
 
-    &__chip-values--disabled {
-      position: relative;
-      display: flex;
-      padding: px2rem(5);
-      margin-left: px2rem(10);
+    &__genre {
+      span {
+        margin-right: px2rem(10);
+      }
     }
   }
 

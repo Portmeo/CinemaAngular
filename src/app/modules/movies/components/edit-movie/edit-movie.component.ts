@@ -7,7 +7,7 @@ import { setTitleLayout } from '@base/store/actions/layout.action';
 import { Actor } from '@modules/actors/store/models/actors.model';
 import { getActorsList, getNameActorById } from '@modules/actors/store/selectors/actors.selector';
 import { Company } from '@modules/companies/store/models/company.model';
-import { getCompaniesList } from '@modules/companies/store/selectors/companies.selectors';
+import { getCompaniesList, getNameCompanyByIdMovie } from '@modules/companies/store/selectors/companies.selectors';
 import * as MoviesActions from '@modules/movies/store/actions/movies.actions';
 import { Movie } from '@modules/movies/store/models/movie.model';
 import { getMovieById } from '@modules/movies/store/selectors/movies.selector';
@@ -28,9 +28,6 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
   public companies$: Observable<Company[]> = this.store.select(getCompaniesList);
   public actors$: Observable<Actor[]> = this.store.select(getActorsList);
   public isEnableUpdate = false;
-
-  @ViewChild('inputGenren', { read: MatInput }) inputGenren!: MatInput;
-  @ViewChild('selectActor', { read: MatSelect }) selectActor!: MatSelect;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -66,7 +63,6 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
       duration: new FormControl(movie.duration, Validators.required),
       imdbRating: new FormControl(movie.imdbRating, Validators.required)
     });
-    this.formMovie.disable();
     this.addActors(movie.actors);
     this.addGenres(movie.genre);
   }
@@ -87,45 +83,24 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
     return this.formMovie.get('actors') as FormArray;
   }
 
-  addGenre(value: string): void {
-    if (!this.genreValues.value.includes(value)) {
-      this.genreValues.push(new FormControl(value));
-      this.inputGenren.value = '';
-    }
+  enableMovie() {
+    this.isEnableUpdate = true;
   }
 
-  removeGenre(index: number): void {
-    this.genreValues.removeAt(index);
+  updateMovie() {
+    const {company, ...movie } = this.formMovie.value;
+    this.store.dispatch(MoviesActions.updateMovie({ movieUpdate: movie }));
   }
 
-  addActor(value: number): void {
-    this.actorsValues.push(new FormControl(value));
-    this.selectActor.value = '';
-  }
-
-  removeActor(index: number): void {
-    this.actorsValues.removeAt(index);
-  }
-
-  isSelectedActor(id: number): boolean {
-    return this.actorsValues.value.includes(id);
+  removeMovie() {
+    this.store.dispatch(MoviesActions.removeMovie({ id: this.formMovie.get('id')!.value }));
   }
 
   getNameActor(id: number): Observable<string | undefined> {
     return this.store.select(getNameActorById(id));
   }
 
-  enableMovie() {
-    this.isEnableUpdate = true;
-    this.formMovie.enable();
-  }
-
-  updateMovie() {
-    this.isEnableUpdate = false;
-    this.formMovie.disable();
-  }
-
-  removeMovie() {
-    this.store.dispatch(MoviesActions.removeMovie({ id: this.formMovie.get('id')!.value }));
+  getNameCompany(id: number): Observable<string | undefined> {
+    return this.store.select(getNameCompanyByIdMovie(id));
   }
 }

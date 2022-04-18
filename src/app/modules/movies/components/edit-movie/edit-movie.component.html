@@ -1,74 +1,42 @@
 <div class="edit-movie">
   <div class="edit-movie__poster">
-    <img src="{{formMovie.get('poster')?.value}}">
+    <img [src]="formMovie.get('poster')?.value ? formMovie.get('poster')?.value : 'assets/images/not-found-image.jpg'" alt="{{formMovie.get('title')?.value}}">
   </div>
-  <form class="edit-movie__form" [formGroup]="formMovie">
-    <mat-form-field class="edit-movie__form__score" appearance="fill">
-      <mat-label>{{ 'movies.form.score' | translate }}</mat-label>
-      <input matInput type="number" formControlName="imdbRating">
-    </mat-form-field>
-    <mat-form-field class="edit-movie__form__duration" appearance="fill">
-      <mat-label>{{ 'movies.form.duration' | translate }}</mat-label>
-      <input matInput type="number" formControlName="duration">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>{{ 'movies.form.title' | translate }}</mat-label>
-      <input matInput type="text" formControlName="title">
-    </mat-form-field>
-    <mat-form-field appearance="fill" *ngIf="isEnableUpdate">
-      <mat-label>{{ 'movies.form.poster' | translate }}</mat-label>
-      <input matInput type="text" formControlName="poster">
-      <mat-error *ngIf="formMovie.get('poster')?.hasError('pattern')">{{'movies.form.poster-error' |translate}}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill" *ngIf="isEnableUpdate">
-      <mat-label>{{ 'movies.form.genre' | translate }}</mat-label>
-      <input matInput #inputGenren type="text">
-      <button type="button" matSuffix [disabled]="!inputGenren.value" mat-icon-button
-        (click)="addGenre(inputGenren.value)">
-        <mat-icon>add</mat-icon>
-      </button>
-    </mat-form-field>
-    <div class="edit-movie__form__genre">
-      <h3 *ngIf="!isEnableUpdate">{{ 'movies.form.genre' | translate }}</h3>
-      <div formArrayName="genre">
-        <div [ngClass]="isEnableUpdate ?  'edit-movie__form__chip-values' : 'edit-movie__form__chip-values--disabled'" [formGroupName]="i"
-          *ngFor="let genre of genreValues.controls; let i = index">
-          <span class="icon" (click)="removeGenre(i)" *ngIf="isEnableUpdate">&#45;</span>
-          <span>#{{genre.value}}</span>
-        </div>
+  <div class="edit-movie__data" *ngIf="!isEnableUpdate else TempleteFormMovie">
+    <div class="edit-movie__data__score">
+      <div class="edit-movie__data__score__box">
+        <h2>{{ 'movies.form.score' | translate }}</h2>
+        <span>{{formMovie.get('imdbRating')?.value}}</span>
+      </div>
+      <div class="edit-movie__data__score__box--duration">
+        <h2>{{ 'movies.form.duration' | translate }}</h2>
+        <span>{{formMovie.get('duration')?.value | timeMovie}}</span>
       </div>
     </div>
-    <mat-form-field appearance="fill" floatLabel="always" *ngIf="isEnableUpdate">
-      <mat-label>{{ 'actors.title' | translate }}</mat-label>
-      <mat-select #selectActor [placeholder]="'movies.form.select_actor' | translate"
-        (selectionChange)="addActor($event.value)">
-        <mat-option *ngFor="let actor of actors$ | async" [disabled]="isSelectedActor(actor.id)" [value]="actor.id">
-          {{actor.first_name}} {{actor.last_name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div class="edit-movie__form__actors">
-      <h3 *ngIf="!isEnableUpdate">{{ 'actors.title' | translate }}</h3>
-      <div formArrayName="actors">
-        <div [ngClass]="isEnableUpdate ?  'edit-movie__form__chip-values' : 'edit-movie__form__chip-values--disabled'" [formGroupName]="i"
-          *ngFor="let actor of actorsValues.controls; let i = index">
-          <span class="icon" (click)="removeActor(i)" *ngIf="isEnableUpdate">&#45;</span>
-          <span>{{(getNameActor(actor.value) | async)}}</span>
-        </div>
-      </div>
+    <div>
+      <h2>{{ 'actors.title' | translate }}</h2>
+      <p *ngFor="let actor of actorsValues.controls">
+        {{(getNameActor(actor.value) | async)}}
+      </p>
     </div>
-    <mat-form-field appearance="fill" floatLabel="always" *ngIf="isEnableUpdate">
-      <mat-label>{{ 'companies.title' | translate }}</mat-label>
-      <mat-select formControlName="company" [placeholder]="'movies.form.select_company' | translate">
-        <mat-option *ngFor="let companie of companies$ | async" [value]="companie.id">{{companie.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>{{ 'movies.form.year' | translate }}</mat-label>
-      <input matInput type="number" formControlName="year">
-    </mat-form-field>
-  </form>
-  <button mat-fab class="edit-movie__update" type="button" color="primary" (click)="isEnableUpdate ? updateMovie() : enableMovie()">
+    <div>
+      <h2>{{ 'companies.title' | translate }}</h2>
+      <p>{{getNameCompany(formMovie.get('id')?.value) | async}}</p>
+    </div>
+    <div class="edit-movie__data__genre">
+      <h2>{{ 'movies.form.genre' | translate }}</h2>
+      <span *ngFor="let genre of genreValues.controls">#{{genre.value}}</span>
+    </div>
+  </div>
+  <ng-template #TempleteFormMovie>
+    <app-form-movie class="edit-movie__form"
+    [formMovie]="formMovie"
+    [companies]="(companies$ | async)"
+    [actors]="(actors$ | async)">
+    </app-form-movie>
+  </ng-template>
+  <button mat-fab class="edit-movie__update" type="button" color="primary"
+    (click)="isEnableUpdate ? updateMovie() : enableMovie()">
     <mat-icon>{{ isEnableUpdate ? 'save' : 'edit'}}</mat-icon>
   </button>
   <button mat-fab class="edit-movie__delete" type="button" color="warn" (click)="removeMovie()">

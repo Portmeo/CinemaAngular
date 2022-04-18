@@ -4,7 +4,7 @@ import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { setTitleLayout } from '@base/store/actions/layout.action';
 import { Actor } from '@modules/actors/store/models/actors.model';
-import { getActorsList, getNameActorById } from '@modules/actors/store/selectors/actors.selector';
+import { getActorsList } from '@modules/actors/store/selectors/actors.selector';
 import { Company } from '@modules/companies/store/models/company.model';
 import { getCompaniesList } from '@modules/companies/store/selectors/companies.selectors';
 import { Store } from '@ngrx/store';
@@ -24,9 +24,6 @@ export class CreateMovieComponent {
 
   public companies$: Observable<Company[]> = this.store.select(getCompaniesList);
   public actors$: Observable<Actor[]> = this.store.select(getActorsList);
-
-  @ViewChild('inputGenren', { read: MatInput }) inputGenren!: MatInput;
-  @ViewChild('selectActor', { read: MatSelect }) selectActor!: MatSelect;
 
   constructor(
     private store: Store,
@@ -50,45 +47,10 @@ export class CreateMovieComponent {
     });
   }
 
-  get genreValues(): FormArray {
-    return this.formMovie.get('genre') as FormArray;
-  }
-
-  get actorsValues(): FormArray {
-    return this.formMovie.get('actors') as FormArray;
-  }
-
   saveMovie(): void {
-    this.store.dispatch(MovieActions.createMovie({ movie: this.formMovie.value }));
+    const {company, ...movie } = this.formMovie.value;
+    this.store.dispatch(MovieActions.createMovie({ movie: movie }));
     this.buildForm();
-  }
-
-  addGenre(value: string): void {
-    if (!this.genreValues.value.includes(value)) {
-      this.genreValues.push(new FormControl(value));
-      this.inputGenren.value = '';
-    }
-  }
-
-  removeGenre(index: number): void {
-    this.genreValues.removeAt(index);
-  }
-
-  addActor(value: number): void {
-    this.actorsValues.push(new FormControl(value));
-    this.selectActor.value = '';
-  }
-
-  removeActor(index: number): void {
-    this.actorsValues.removeAt(index);
-  }
-
-  isSelectedActor(id: number): boolean {
-    return this.actorsValues.value.includes(id);
-  }
-
-  getNameActor(id: number): Observable<string | undefined> {
-    return this.store.select(getNameActorById(id));
   }
 
 }
