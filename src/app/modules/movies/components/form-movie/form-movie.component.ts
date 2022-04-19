@@ -61,7 +61,7 @@ export class FormMovieComponent implements OnInit {
     return this.actorsValues.value.includes(id);
   }
 
-  getNameActor(id: number): Observable<string | undefined> {
+  getNameActor(id: number): Observable<string | null> {
     return this.store.select(getNameActorById(id));
   }
 

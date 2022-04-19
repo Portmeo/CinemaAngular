@@ -43,7 +43,7 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
           takeUntil(this.destroyed$)
         ).subscribe(async movie => {
           if (movie) {
-            this.store.dispatch(setTitleLayout({ title: movie.title }));
+            this.store.dispatch(setTitleLayout({ title: `${movie.title} (${movie.year})` }));
             this.isEnableUpdate = false;
             this.movie = movie;
             this.company = await firstValueFrom(this.getCompany(movie.id));
@@ -102,7 +102,7 @@ export class EditMovieComponent extends UnsubscribeOnDestroy {
     this.store.dispatch(MoviesActions.removeMovie({ id: this.formMovie.get('id')!.value }));
   }
 
-  getNameActor(id: number): Observable<string | undefined> {
+  getNameActor(id: number): Observable<string | null> {
     return this.store.select(getNameActorById(id));
   }
 
