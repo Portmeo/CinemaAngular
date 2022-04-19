@@ -15,8 +15,11 @@ export const companiesReducer = createReducer(
   on(CompaniesActions.setCompaniesByMovie, (state, { idMovie, oldCompany, newCompany }) => ({
     ...state,
     list: state.list.map(company => {
-      const movies = company.id === newCompany ? company.movies.concat([idMovie]) :
-      company.movies.includes(oldCompany!) ? company.movies.filter(movie => movie != idMovie) : company.movies;
+      const movies = company.id === newCompany ?
+        [...new Set([...company.movies, idMovie])] :
+        company.movies.includes(oldCompany!) ?
+        company.movies.filter(movie => movie != idMovie) :
+        company.movies;
       return { ...company, movies};
     })
   })),
