@@ -1,3 +1,8 @@
 export interface MainState {
-  errors?: any;
+  errors: GenericError
+}
+
+export interface GenericError {
+  code: number | null;
+  message: string | null;
 }

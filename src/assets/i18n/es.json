@@ -1,7 +1,8 @@
 {
   "layout": {
     "pageNotFound": "Pagina no disponible!",
-    "pageNotFound_text": "Lo sentimos la pagina no se encuentra disponible"
+    "pageNotFound_text": "Lo sentimos la pagina no se encuentra disponible",
+    "errors": "Se ha producido un error"
   },
   "movies": {
     "title": "Peliculas",
@@ -17,12 +18,15 @@
       "select_actor": "Seleccione un actor",
       "select_company": "Seleccione un estudio",
       "poster-error": "Texto introducido no es una url"
-    }
+    },
+    "error": "Error al obtener las peliculas"
   },
   "actors": {
-    "title": "Actores"
+    "title": "Actores",
+    "error": "Error al obtener los actores"
   },
   "companies": {
-    "title": "Estudios"
+    "title": "Estudios",
+    "error": "Error al obtener los estudios"
   }
 }

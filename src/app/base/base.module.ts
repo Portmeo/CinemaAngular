@@ -11,14 +11,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { LayoutReducer } from './store/reducers/layout.reducer';
 import { StoreModule } from '@ngrx/store';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
-    ErrorComponent
+    ErrorComponent,
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +32,7 @@ import { StoreModule } from '@ngrx/store';
     MatToolbarModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     TranslateModule.forChild(),
     StoreModule.forFeature('layout', LayoutReducer)
   ]

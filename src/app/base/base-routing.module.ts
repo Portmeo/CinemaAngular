@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ErrorComponent } from './components/error/error.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -30,12 +30,12 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'error',
-    component: ErrorComponent
+    path: 'page-not-found',
+    component: PageNotFoundComponent
   },
   {
     path: '**',
-    redirectTo: 'error'
+    redirectTo: 'page-not-found'
   }
 ];
 

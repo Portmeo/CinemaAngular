@@ -4,14 +4,17 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { SpinnerService } from '@shared/services/spinner.service';
 import { Company } from '../models/company.model';
 import * as CompaniesActions from "../actions/companies.actions";
+import * as MainActions from "@state/actions/errors.actions";
 import { catchError, finalize, map, of, switchMap } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class CompaniesEffects {
   constructor(
     private readonly actions$: Actions,
     private loaderSpinner: SpinnerService,
-    private companiesService: CompaniesService
+    private companiesService: CompaniesService,
+    private translate: TranslateService
   ) { }
 
   getMovies$ = createEffect(() =>
@@ -23,7 +26,14 @@ export class CompaniesEffects {
           map((companies: Company[]) => {
             return CompaniesActions.setCompanies({ list: companies });
           }),
-          catchError(() => of()),
+          catchError((error) => of(MainActions.setErrors(
+            {
+              errors: {
+                code: error.status,
+                message: this.translate.instant('companies.error')
+              }
+            }
+          ))),
           finalize(() => this.loaderSpinner.changeStateLoaderSpinner(false))
         )
       })

@@ -1,6 +1,5 @@
-<div class="error-page">
-  <h1>404</h1>
-  <h3>{{ 'layout.pageNotFound' | translate }}</h3>
-  <p>{{ 'layout.pageNotFound_text' | translate }}</p>
-  <a mat-raised-button color="primary" (click)="back()">Volver</a>
+<h1 mat-dialog-title>{{'layout.errors' | translate}}</h1>
+<div mat-dialog-content>{{data.errors.message}}</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" mat-dialog-close>Cerrar</button>
 </div>

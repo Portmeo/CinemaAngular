@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { GenericError } from '@state/models/main-state.model';
 
 @Component({
   selector: 'app-error',
@@ -9,14 +10,9 @@ import { Location } from '@angular/common';
 export class ErrorComponent implements OnInit {
 
   constructor(
-    private location: Location
+    @Inject(MAT_DIALOG_DATA) public data: { errors: GenericError }
   ) { }
 
-  ngOnInit(): void {
-  }
-
-  back(): void {
-    this.location.back()
-  }
+  ngOnInit(): void { }
 
 }

@@ -1,17 +1,3 @@
-@import '../../../../styles/main';
-
-.error-page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  h1,
-  h3,
-  p,
-  a {
-    margin: px2rem(5);
-    padding: px2rem(10);
-  }
+.mat-dialog-actions {
+  justify-content: flex-end;
 }

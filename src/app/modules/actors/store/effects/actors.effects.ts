@@ -4,14 +4,17 @@ import { Actions, ofType, createEffect } from "@ngrx/effects";
 import { SpinnerService } from "@shared/services/spinner.service";
 import { catchError, finalize, map, of, switchMap } from "rxjs";
 import * as ActorsActions from "../actions/actors.actions";
+import * as MainActions from "@state/actions/errors.actions";
 import { Actor } from "../models/actors.model";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class ActorsEffects {
   constructor(
     private readonly actions$: Actions,
     private loaderSpinner: SpinnerService,
-    private actorsService: ActorsService
+    private actorsService: ActorsService,
+    private translate: TranslateService
   ) { }
 
   getActors$ = createEffect(() =>
@@ -23,7 +26,14 @@ export class ActorsEffects {
           map((actors: Actor[]) => {
             return ActorsActions.setActors({ list: actors });
           }),
-          catchError(() => of()),
+          catchError((error) => of(MainActions.setErrors(
+            {
+              errors: {
+                code: error.status,
+                message: this.translate.instant('actors.error')
+              }
+            }
+          ))),
           finalize(() => this.loaderSpinner.changeStateLoaderSpinner(false))
         )
       })
