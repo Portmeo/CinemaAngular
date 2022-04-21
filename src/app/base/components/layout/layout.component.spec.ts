@@ -31,7 +31,7 @@ describe('LayoutComponent', () => {
     movies: {
       list: db.movies
     },
-    layaout: {
+    layout: {
       title: 'test'
     }
   };
