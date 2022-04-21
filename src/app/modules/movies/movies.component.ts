@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { setTitleLayout } from '@base/store/actions/layout.action';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { getMovies } from './store/actions/movies.actions';
 import { Movie } from './store/models/movie.model';
 import { getMoviesList } from './store/selectors/movies.selector';
 
@@ -12,7 +11,7 @@ import { getMoviesList } from './store/selectors/movies.selector';
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss']
 })
-export class MoviesComponent implements OnInit {
+export class MoviesComponent {
 
   public movies$: Observable<Movie[]> = this.store.select(getMoviesList);
 
@@ -21,9 +20,6 @@ export class MoviesComponent implements OnInit {
     private translate: TranslateService,
   ) {
     this.store.dispatch(setTitleLayout({title: this.translate.instant('movies.title')}));
-  }
-
-  ngOnInit(): void {
   }
 
 }

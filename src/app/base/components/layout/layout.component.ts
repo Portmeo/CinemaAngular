@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { getActors } from '@modules/actors/store/actions/actors.actions';
@@ -19,7 +19,7 @@ import { ErrorComponent } from '../error/error.component';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent extends UnsubscribeOnDestroy implements OnInit {
+export class LayoutComponent extends UnsubscribeOnDestroy {
 
   public title = this.store.select(getTitleLayout);
   public isShowMenuButton!: boolean;
@@ -28,7 +28,7 @@ export class LayoutComponent extends UnsubscribeOnDestroy implements OnInit {
     readonly spinnerService: SpinnerService,
     private store: Store,
     private router: Router,
-    private dialog: MatDialog
+    readonly dialog: MatDialog
   ) {
     super();
     this.showMenuButton();
@@ -36,23 +36,23 @@ export class LayoutComponent extends UnsubscribeOnDestroy implements OnInit {
     this.getErrors();
   }
 
-  ngOnInit(): void { }
-
-  getData() {
+  getData(): void {
     this.store.dispatch(getMovies());
     this.store.dispatch(getActors());
     this.store.dispatch(getCompanies());
   }
 
-  showMenuButton() {
-    this.router.events.subscribe((routeEvent) => {
+  showMenuButton(): void {
+    this.router.events.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe((routeEvent) => {
       if (routeEvent instanceof NavigationEnd) {
         this.isShowMenuButton = routeEvent.url.split('/').length < 3;
       }
     });
   }
 
-  getErrors() {
+  getErrors(): void {
     this.store.select(getErrors)
       .pipe(
         takeUntil(this.destroyed$)

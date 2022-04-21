@@ -9,5 +9,5 @@ export const getCompaniesList = createSelector(getCompaniesData, (state: Compani
 
 export const getCompanyByIdMovie = (id: number) => createSelector(getCompaniesData, (state: CompaniesState) =>{
   const company = state.list.find(company => company.movies.includes(id));
-  return company ? company : null;
+  return company;
 });

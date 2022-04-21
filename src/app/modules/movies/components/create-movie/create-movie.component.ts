@@ -33,7 +33,7 @@ export class CreateMovieComponent {
     this.buildForm();
   }
 
-  buildForm() {
+  buildForm(): void {
     this.formMovie = new FormGroup({
       id: new FormControl(Math.floor(Math.random() * 10000)),
       title: new FormControl('', Validators.required),
